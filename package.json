@@ -5,6 +5,9 @@
   "repository": "ssh://git@github.com/budougumi0617/udemy_react.git",
   "author": "budougumi0617 <budougumi0617@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "./node_modules/.bin/webpack-dev-server"
+  },
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
