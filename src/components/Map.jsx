@@ -13,7 +13,7 @@ const InnerMap = withGoogleMap(props => (
 const Map = ({ lat, lng }) => (
   <InnerMap
     containerElement={(<div />)}
-    mapElement={(<div className="map"/>)}
+    mapElement={(<div className="map" />)}
     position={{ lat, lng }}
   />
 );
@@ -21,11 +21,11 @@ const Map = ({ lat, lng }) => (
 Map.propTypes = {
   lat: PropTypes.number,
   lng: PropTypes.number,
-}
+};
 
 Map.defaultProps = {
   lat: 35.6585805,
   lng: 139.7454329,
-}
+};
 
 export default Map;
