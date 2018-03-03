@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // 引数をpropsではなく、受け取りたいpropsの変数名で受ければ、
 // props.addressと言った呼び出しをする必要がなくなる
