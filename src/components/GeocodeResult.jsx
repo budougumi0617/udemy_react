@@ -12,15 +12,13 @@ const GeocodeResult = ({ address, lat, lng }) => (
 
 GeocodeResult.propTypes = {
   address: PropTypes.string,
-  lat: PropTypes.number,
-  lng: PropTypes.number,
+  lat: PropTypes.number.isRequired,
+  lng: PropTypes.number.isRequired,
 };
 
 // requiredじゃないときはデフォルト引数の設定が必要。
 GeocodeResult.defaultProps = {
   address: '',
-  lat: 0,
-  lng: 0,
 };
 
 export default GeocodeResult;

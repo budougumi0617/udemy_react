@@ -11,6 +11,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lat: 35.6585805,
+      lng: 139.7454329,
     };
   }
 
@@ -25,7 +27,6 @@ class App extends Component {
   handlePlaceSubmit(place) {
     axios.get(GEOCODE_ENDPOINT, { params: { address: place } })
       .then((results) => {
-        console.log(results);
         const data = results.data;
         const result = results.data.results[0];
         switch (data.status) {
