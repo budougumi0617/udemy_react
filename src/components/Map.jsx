@@ -23,11 +23,13 @@ const Map = ({ lat, lng }) => {
   );
 };
 
+// propsのvalidationを定義しておく
 Map.propTypes = {
   lat: PropTypes.number,
   lng: PropTypes.number,
 };
 
+// propsのデフォルト値を定義しておく
 Map.defaultProps = {
   lat: 35.6585805,
   lng: 139.7454329,
