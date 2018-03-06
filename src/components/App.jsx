@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 import GeocodeResult from './GeocodeResult';
 import Map from './Map';
+import HotelsTable from './HotelsTable';
 
 import { geocode } from '../domain/Geocoder.js';
 
@@ -14,6 +15,11 @@ class App extends Component {
         lat: 35.6585805,
         lng: 139.7454329,
       },
+      // ハッシュ配列のダミーデータ
+      hotels: [
+        { id: 111, name: 'ホテルオークラ', url: 'https://google.com' },
+        { id: 22, name: 'アパホテル', url: 'https://yahoo.co.jp' },
+      ],
     };
   }
 
@@ -56,10 +62,14 @@ class App extends Component {
         <SearchForm onSubmit={place => this.handlePlaceSubmit(place)} />
         <div className="result-area">
           <Map location={this.state.location} />
-          <GeocodeResult
-            address={this.state.address}
-            location={this.state.location}
-          />
+          <div>
+            <GeocodeResult
+              address={this.state.address}
+              location={this.state.location}
+            />
+            <h2>ホテル検索結果</h2>
+            <HotelsTable hotels={this.state.hotels} />
+          </div>
         </div>
       </div>
     );
