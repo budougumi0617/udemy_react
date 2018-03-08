@@ -17,10 +17,10 @@ class App extends Component {
         lng: 139.7454329,
       },
       // ハッシュ配列のダミーデータ
-      hotels: [
-        { id: 111, name: 'ホテルオークラ', url: 'https://google.com' },
-        { id: 22, name: 'アパホテル', url: 'https://yahoo.co.jp' },
-      ],
+      // hotels: [
+      //   { id: 111, name: 'ホテルオークラ', url: 'https://google.com' },
+      //   { id: 22, name: 'アパホテル', url: 'https://yahoo.co.jp' },
+      // ],
     };
   }
 
