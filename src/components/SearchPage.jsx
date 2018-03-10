@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import SearchForm from './SearchForm';
@@ -13,6 +14,7 @@ const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
 
 class SearchPage extends Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
       location: {
@@ -39,6 +41,8 @@ class SearchPage extends Component {
   }
 
   handlePlaceSubmit(place) {
+    // pushを使えばページ遷移時にパラメータをURLに付加することができる。
+    this.props.history.push(`/?query=${place}`);
     geocode(place)
       .then(({ status, address, location }) => {
         switch (status) {
@@ -95,5 +99,10 @@ class SearchPage extends Component {
     );
   }
 }
+
+SearchPage.propTypes = {
+  // react-router-domを使っているとpropsにhistoryやmatchなどの情報が追加される
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 
 export default SearchPage;
