@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Presentation Component。描画しているだけで純粋関数に近い。
 const SearchForm = props => (
   <form className="search-form" onSubmit={e => props.onSubmit(e)}>
     <input

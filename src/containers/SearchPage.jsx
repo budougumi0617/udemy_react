@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import queryString from 'query-string';
 
-import SearchForm from './SearchForm';
+import SearchForm from '../components/SearchForm';
 // import GeocodeResult from './GeocodeResult';
 // import Map from './Map';
 // import HotelsTable from './HotelsTable';
@@ -13,6 +13,8 @@ import { searchHotelByLocation } from '../domain/HotelRepository';
 
 const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
 
+// Container component。もろもろの処理をしている。
+// フォルダーもcomponentから分けるのが望ましい。
 class SearchPage extends Component {
   constructor(props) {
     console.log(props);
@@ -34,10 +36,20 @@ class SearchPage extends Component {
 
   // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
   componentDidMount() {
-    const place = this.getPlaceParam();
-    if (place) {
-      this.startSearch(place);
-    }
+    this.unsubscribe = this.props.store.subscribe(() => {
+      // stateはimmutable(readonly)なのでstateの変更なしで強制的に更新させる
+      this.forceUpdate();
+    });
+    // const place = this.getPlaceParam();
+    // if (place) {
+    //   this.startSearch(place);
+    // }
+  }
+
+  // componentが廃棄されるときに呼ばれる
+  componentWillUnmount() {
+    // storeへの登録を解除する
+    this.unsubscribe();
   }
 
   getPlaceParam() {
@@ -61,7 +73,8 @@ class SearchPage extends Component {
 
   handlePlaceChange(e) {
     e.preventDefault();
-    this.props.onPlaceChange(e.target.value);
+    // storeの内容を変更する。
+    this.props.store.dispatch({ type: 'CHANGE_PLACE', place: e.target.value });
   }
 
   handlePlaceSubmit(e) {
@@ -107,11 +120,12 @@ class SearchPage extends Component {
   }
 
   render() {
+    const state = this.props.store.getState();
     return (
       <div className="search-page">
         <h1 className="app-title">ホテル検索</h1>
         <SearchForm
-          place={this.props.place}
+          place={state.place}
           onPlaceChange={e => this.handlePlaceChange(e)}
           onSubmit={e => this.handlePlaceSubmit(e)}
         />
@@ -141,8 +155,11 @@ SearchPage.propTypes = {
   // react-router-domを使っているとpropsにhistoryやmatchなどの情報が追加される
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
-  onPlaceChange: PropTypes.func.isRequired,
-  place: PropTypes.string.isRequired,
+  store: PropTypes.shape({
+    subscribe: PropTypes.func,
+    getState: PropTypes.func,
+    dispatch: PropTypes.func,
+  }).isRequired,
 };
 
 export default SearchPage;
