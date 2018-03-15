@@ -4,9 +4,9 @@ import _ from 'lodash';
 import queryString from 'query-string';
 
 import SearchForm from './SearchForm';
-import GeocodeResult from './GeocodeResult';
-import Map from './Map';
-import HotelsTable from './HotelsTable';
+// import GeocodeResult from './GeocodeResult';
+// import Map from './Map';
+// import HotelsTable from './HotelsTable';
 
 import { geocode } from '../domain/Geocoder.js';
 import { searchHotelByLocation } from '../domain/HotelRepository';
@@ -141,6 +141,8 @@ SearchPage.propTypes = {
   // react-router-domを使っているとpropsにhistoryやmatchなどの情報が追加される
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
+  onPlaceChange: PropTypes.func.isRequired,
+  place: PropTypes.string.isRequired,
 };
 
 export default SearchPage;
