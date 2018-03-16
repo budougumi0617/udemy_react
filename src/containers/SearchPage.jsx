@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import SearchForm from '../components/SearchForm';
@@ -10,6 +10,14 @@ import SearchForm from '../components/SearchForm';
 
 import { geocode } from '../domain/Geocoder.js';
 import { searchHotelByLocation } from '../domain/HotelRepository';
+
+const mapStateToProps = state => ({
+  place: state.place,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onPlaceChange: place => dispatch({ type: 'CHANGE_PLACE', place }),
+});
 
 const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
 
@@ -36,20 +44,10 @@ class SearchPage extends Component {
 
   // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
   componentDidMount() {
-    this.unsubscribe = this.props.store.subscribe(() => {
-      // stateはimmutable(readonly)なのでstateの変更なしで強制的に更新させる
-      this.forceUpdate();
-    });
     // const place = this.getPlaceParam();
     // if (place) {
     //   this.startSearch(place);
     // }
-  }
-
-  // componentが廃棄されるときに呼ばれる
-  componentWillUnmount() {
-    // storeへの登録を解除する
-    this.unsubscribe();
   }
 
   getPlaceParam() {
@@ -74,7 +72,7 @@ class SearchPage extends Component {
   handlePlaceChange(e) {
     e.preventDefault();
     // storeの内容を変更する。
-    this.props.store.dispatch({ type: 'CHANGE_PLACE', place: e.target.value });
+    this.props.onPlaceChange(e.target.value);
   }
 
   handlePlaceSubmit(e) {
@@ -120,12 +118,12 @@ class SearchPage extends Component {
   }
 
   render() {
-    const state = this.props.store.getState();
+    console.log(this.props);
     return (
       <div className="search-page">
         <h1 className="app-title">ホテル検索</h1>
         <SearchForm
-          place={state.place}
+          place={this.props.place}
           onPlaceChange={e => this.handlePlaceChange(e)}
           onSubmit={e => this.handlePlaceSubmit(e)}
         />
@@ -155,11 +153,12 @@ SearchPage.propTypes = {
   // react-router-domを使っているとpropsにhistoryやmatchなどの情報が追加される
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
-  store: PropTypes.shape({
-    subscribe: PropTypes.func,
-    getState: PropTypes.func,
-    dispatch: PropTypes.func,
-  }).isRequired,
+  place: PropTypes.string.isRequired,
+  onPlaceChange: PropTypes.func.isRequired,
 };
 
-export default SearchPage;
+// SearchPageとストアを紐付けた新しいコンポーネントを返す
+const ConnectedSearchPage =
+  connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+
+export default ConnectedSearchPage;
