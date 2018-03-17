@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import SearchForm from '../components/SearchForm';
+import SearchForm from '../containers/SearchForm';
 // import GeocodeResult from './GeocodeResult';
 // import Map from './Map';
 // import HotelsTable from './HotelsTable';
 
 import { geocode } from '../domain/Geocoder.js';
 import { searchHotelByLocation } from '../domain/HotelRepository';
-
-const mapStateToProps = state => ({
-  place: state.place,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onPlaceChange: place => dispatch({ type: 'CHANGE_PLACE', place }),
-});
 
 const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
 
@@ -69,12 +60,6 @@ class SearchPage extends Component {
     });
   }
 
-  handlePlaceChange(e) {
-    e.preventDefault();
-    // storeの内容を変更する。
-    this.props.onPlaceChange(e.target.value);
-  }
-
   handlePlaceSubmit(e) {
     // https://developer.mozilla.org/ja/docs/Web/API/Event/preventDefault
     // 画面遷移などのイベントを抑制する
@@ -123,8 +108,6 @@ class SearchPage extends Component {
       <div className="search-page">
         <h1 className="app-title">ホテル検索</h1>
         <SearchForm
-          place={this.props.place}
-          onPlaceChange={e => this.handlePlaceChange(e)}
           onSubmit={e => this.handlePlaceSubmit(e)}
         />
         {/*
@@ -153,12 +136,6 @@ SearchPage.propTypes = {
   // react-router-domを使っているとpropsにhistoryやmatchなどの情報が追加される
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
-  place: PropTypes.string.isRequired,
-  onPlaceChange: PropTypes.func.isRequired,
 };
 
-// SearchPageとストアを紐付けた新しいコンポーネントを返す
-const ConnectedSearchPage =
-  connect(mapStateToProps, mapDispatchToProps)(SearchPage);
-
-export default ConnectedSearchPage;
+export default SearchPage;
