@@ -7,8 +7,6 @@ import SearchForm from '../containers/SearchForm';
 // import Map from './Map';
 // import HotelsTable from './HotelsTable';
 
-import { geocode } from '../domain/Geocoder.js';
-import { searchHotelByLocation } from '../domain/HotelRepository';
 
 const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
 
@@ -67,32 +65,6 @@ class SearchPage extends Component {
     // pushを使えばページ遷移時にパラメータをURLに付加することができる。
     this.props.history.push(`/?place=${this.state.place}`);
     this.startSearch(this.state.place);
-  }
-
-  startSearch() {
-    geocode(this.state.place)
-      .then(({ status, address, location }) => {
-        switch (status) {
-          case 'OK': {
-            this.setState({ address, location });
-            return searchHotelByLocation(location);
-          }
-          case 'ZERO_RESULTS': {
-            this.setErrorMessage('結果が見つかりませんでした');
-            break;
-          }
-          default: {
-            this.setErrorMessage('エラーが発生しました');
-          }
-        }
-        return [];
-      })
-      .then((hotels) => {
-        this.setState({ hotels: sortedHotels(hotels, this.state.sortKey) });
-      })
-      .catch(() => {
-        this.setErrorMessage('通信にエラーが発生しました');
-      });
   }
 
   handleSortKeyChange(sortKey) {
