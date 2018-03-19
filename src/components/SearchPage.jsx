@@ -17,11 +17,6 @@ class SearchPage extends Component {
     console.log(props);
     super(props);
     this.state = {
-      place: this.getPlaceParam() || '東京タワー',
-      location: {
-        lat: 35.6585805,
-        lng: 139.7454329,
-      },
       sortKey: 'price',
       // ハッシュ配列のダミーデータ
       // hotels: [

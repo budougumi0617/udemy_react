@@ -46,7 +46,7 @@ const mapDispatchToProps = dispatch => ({
       .then(({ status, address, location }) => {
         switch (status) {
           case 'OK': {
-            this.setState({ address, location });
+            dispatch({ type: 'GEOCODE_FETCHED', address, location });
             //      return searchHotelByLocation(location);
             break;
           }
