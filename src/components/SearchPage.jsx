@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import { connect } from 'react-redux';
 
 import SearchForm from '../containers/SearchForm';
-// import GeocodeResult from './GeocodeResult';
-// import Map from './Map';
+import GeocodeResult from './GeocodeResult';
+import Map from './Map';
 // import HotelsTable from './HotelsTable';
 
 
@@ -53,14 +54,14 @@ class SearchPage extends Component {
     });
   }
 
-  handlePlaceSubmit(e) {
-    // https://developer.mozilla.org/ja/docs/Web/API/Event/preventDefault
-    // 画面遷移などのイベントを抑制する
-    e.preventDefault();
-    // pushを使えばページ遷移時にパラメータをURLに付加することができる。
-    this.props.history.push(`/?place=${this.state.place}`);
-    this.startSearch(this.state.place);
-  }
+  // handlePlaceSubmit(e) {
+  //   // https://developer.mozilla.org/ja/docs/Web/API/Event/preventDefault
+  //   // 画面遷移などのイベントを抑制する
+  //   e.preventDefault();
+  //   // pushを使えばページ遷移時にパラメータをURLに付加することができる。
+  //   this.props.history.push(`/?place=${this.state.place}`);
+  //   this.startSearch(this.state.place);
+  // }
 
   handleSortKeyChange(sortKey) {
     this.setState({
@@ -74,26 +75,24 @@ class SearchPage extends Component {
     return (
       <div className="search-page">
         <h1 className="app-title">ホテル検索</h1>
-        <SearchForm
-          onSubmit={e => this.handlePlaceSubmit(e)}
-        />
-        {/*
+        <SearchForm />
         <div className="result-area">
-          <Map location={this.state.location} />
+          <Map location={this.props.geocodeResult.location} />
           <div>
             <GeocodeResult
-              address={this.state.address}
-              location={this.state.location}
+              address={this.props.geocodeResult.address}
+              location={this.props.geocodeResult.location}
             />
+            {/*
             <h2>ホテル検索結果</h2>
             <HotelsTable
               hotels={this.state.hotels}
               sortKey={this.state.sortKey}
               onSort={sortKey => this.handleSortKeyChange(sortKey)}
             />
+            */}
           </div>
         </div>
-        */}
       </div>
     );
   }
@@ -101,8 +100,19 @@ class SearchPage extends Component {
 
 SearchPage.propTypes = {
   // react-router-domを使っているとpropsにhistoryやmatchなどの情報が追加される
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  // history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
+  geocodeResult: PropTypes.shape({
+    address: PropTypes.string,
+    location: PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+    }),
+  }).isRequired,
 };
 
-export default SearchPage;
+const mapStateToProps = state => ({
+  geocodeResult: state.geocodeResult,
+});
+
+export default connect(mapStateToProps)(SearchPage);

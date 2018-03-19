@@ -69,4 +69,6 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
+// mapStateToProps Storeが更新される度に呼ばれる。つまり、アプリの状態が変化したときのコールバック
+// mapDispatchToProps ReduxComponentのイベントとReduxのActionを結びつける
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

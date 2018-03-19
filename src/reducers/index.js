@@ -20,8 +20,11 @@ const geocodeResult = (
 ) => {
   console.log('action:', action);
   switch (action.type) {
-    case 'CHANGE_PLACE':
-      return action.place;
+    case 'GEOCODE_FETCHED':
+      return {
+        address: action.address,
+        location: action.location,
+      };
     default:
       return state;
   }
