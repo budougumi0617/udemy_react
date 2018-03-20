@@ -22,6 +22,8 @@ const SearchForm = props => (
       value={props.place}
       onChange={(e) => {
         e.preventDefault();
+        // actions/index.jsで定義されているplaceを処理する関数が戻ってくるので、それがactionにセットされる
+        // thunkのmiddlewareに渡されたとき、actionがfunctionになる
         props.setPlace(e.target.value);
       }}
     />

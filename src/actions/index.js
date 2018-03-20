@@ -1,7 +1,7 @@
 import { geocode } from '../domain/Geocoder.js';
 // import { searchHotelByLocation } from '../domain/HotelRepository';
 
-// placeをもらって関数を返す。ストアから受け取ったdispatchを実行する
+// placeをもらってストアから受け取ったdispatchを実行する関数を返す
 export const setPlace = place => dispatch => dispatch({ type: 'CHANGE_PLACE', place });
 
 export const startSearch = () => (dispatch, getState) => {

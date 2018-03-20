@@ -9,6 +9,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import SearchPage from './components//SearchPage';
 import reducer from './reducers';
 
+// Middlewareを追加している。viewから発行されたactionをごにょごにょしてreducerにわたす。
+// loggingとかできる。
 const store = createStore(
   reducer, /* preloadedState, */
   // http://extension.remotedev.io/
@@ -25,3 +27,23 @@ ReactDom.render(
   </Provider>,
   document.querySelector('.container'),
 );
+
+
+// thunkのコード
+/*
+function createThunkMiddleware(extraArgument) {
+  // nextは次のmiddleware
+  return ({ dispatch, getState }) => next => action => {
+    if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+    }
+
+    return next(action);
+  };
+}
+// thunk(store)(next)(action)と呼んでいるイメージ
+const thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+export default thunk;
+*/
