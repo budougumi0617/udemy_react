@@ -7,6 +7,7 @@ import SearchForm from '../containers/SearchForm';
 import GeocodeResult from './GeocodeResult';
 import Map from './Map';
 import HotelsTable from './HotelsTable';
+import { startSearch } from '../actions';
 
 
 // Container component。もろもろの処理をしている。
@@ -25,13 +26,14 @@ class SearchPage extends Component {
 //    };
 //  }
 
-//  // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
-//  componentDidMount() {
-//    // const place = this.getPlaceParam();
-//    // if (place) {
-//    //   this.startSearch(place);
-//    // }
-//  }
+  // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
+  componentDidMount() {
+    this.props.dispatch(startSearch());
+    // const place = this.getPlaceParam();
+    // if (place) {
+    //   this.startSearch(place);
+    // }
+  }
 
   getPlaceParam() {
     const params = queryString.parse(this.props.location.search);
@@ -101,6 +103,7 @@ SearchPage.propTypes = {
       lng: PropTypes.number.isRequired,
     }),
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
