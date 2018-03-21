@@ -25,11 +25,25 @@ const geocodeResult = (
         address: action.address,
         location: action.location,
       };
+    case 'CHANGE_ERROR_MESSAGE':
+      return {
+        address: action.message,
+        location: { lat: 0, lng: 0 },
+      };
     default:
       return state;
   }
 };
 
+const hotels = (state = [], action) => {
+  console.log('action:', action);
+  switch (action.type) {
+    case 'CHANGE_HOTELS':
+      return action.hotels;
+    default:
+      return state;
+  }
+};
 
 // 文字列だけじゃなくてオブジェクトとしてexportするように変換
 export default combineReducers({ place, geocodeResult });

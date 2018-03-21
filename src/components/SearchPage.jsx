@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SearchForm from '../containers/SearchForm';
 import GeocodeResult from './GeocodeResult';
 import Map from './Map';
-// import HotelsTable from './HotelsTable';
+import HotelsTable from './HotelsTable';
 
 
 const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
@@ -83,14 +83,8 @@ class SearchPage extends Component {
               address={this.props.geocodeResult.address}
               location={this.props.geocodeResult.location}
             />
-            {/*
             <h2>ホテル検索結果</h2>
-            <HotelsTable
-              hotels={this.state.hotels}
-              sortKey={this.state.sortKey}
-              onSort={sortKey => this.handleSortKeyChange(sortKey)}
-            />
-            */}
+            <HotelsTable />
           </div>
         </div>
       </div>
