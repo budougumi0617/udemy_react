@@ -36,7 +36,7 @@ const geocodeResult = (
 };
 
 const hotels = (state = [], action) => {
-  console.log('action:', action);
+  console.log('hotels action:', action);
   switch (action.type) {
     case 'CHANGE_HOTELS':
       return action.hotels;
@@ -46,4 +46,4 @@ const hotels = (state = [], action) => {
 };
 
 // 文字列だけじゃなくてオブジェクトとしてexportするように変換
-export default combineReducers({ place, geocodeResult });
+export default combineReducers({ place, geocodeResult, hotels });

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import HotelRow from './HotelRow';
 import HotelsClickableTh from './HotelsClickableTh';
@@ -32,8 +33,6 @@ const HotelsTable = ({ hotels, onSort, sortKey }) => (
 
 HotelsTable.propTypes = {
   hotels: PropTypes.arrayOf(PropTypes.any),
-  onSort: PropTypes.func.isRequired,
-  sortKey: PropTypes.string.isRequired,
 };
 
 // requiredじゃないときはデフォルト引数の設定が必要。
@@ -41,4 +40,9 @@ HotelsTable.defaultProps = {
   hotels: [],
 };
 
-export default HotelsTable;
+export default connect(
+  // mapStateToProps
+  state => ({
+    hotels: state.hotels,
+  }),
+)(HotelsTable);
