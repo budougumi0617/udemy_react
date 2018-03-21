@@ -9,31 +9,29 @@ import Map from './Map';
 import HotelsTable from './HotelsTable';
 
 
-const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
-
 // Container component。もろもろの処理をしている。
 // フォルダーもcomponentから分けるのが望ましい。
 class SearchPage extends Component {
-  constructor(props) {
-    console.log(props);
-    super(props);
-    this.state = {
-      sortKey: 'price',
-      // ハッシュ配列のダミーデータ
-      // hotels: [
-      //   { id: 111, name: 'ホテルオークラ', url: 'https://google.com' },
-      //   { id: 22, name: 'アパホテル', url: 'https://yahoo.co.jp' },
-      // ],
-    };
-  }
+//  constructor(props) {
+//    console.log(props);
+//    super(props);
+//    this.state = {
+//      sortKey: 'price',
+//      // ハッシュ配列のダミーデータ
+//      // hotels: [
+//      //   { id: 111, name: 'ホテルオークラ', url: 'https://google.com' },
+//      //   { id: 22, name: 'アパホテル', url: 'https://yahoo.co.jp' },
+//      // ],
+//    };
+//  }
 
-  // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
-  componentDidMount() {
-    // const place = this.getPlaceParam();
-    // if (place) {
-    //   this.startSearch(place);
-    // }
-  }
+//  // ComponentがDOMツリーに追加される前に一度だけ呼ばれる
+//  componentDidMount() {
+//    // const place = this.getPlaceParam();
+//    // if (place) {
+//    //   this.startSearch(place);
+//    // }
+//  }
 
   getPlaceParam() {
     const params = queryString.parse(this.props.location.search);
@@ -44,15 +42,15 @@ class SearchPage extends Component {
     return null;
   }
 
-  setErrorMessage(message) {
-    this.setState({
-      address: message,
-      location: {
-        lat: 0,
-        lng: 0,
-      },
-    });
-  }
+  // setErrorMessage(message) {
+  //   this.setState({
+  //     address: message,
+  //     location: {
+  //       lat: 0,
+  //       lng: 0,
+  //     },
+  //   });
+  // }
 
   // handlePlaceSubmit(e) {
   //   // https://developer.mozilla.org/ja/docs/Web/API/Event/preventDefault
@@ -63,12 +61,12 @@ class SearchPage extends Component {
   //   this.startSearch(this.state.place);
   // }
 
-  handleSortKeyChange(sortKey) {
-    this.setState({
-      sortKey,
-      hotels: sortedHotels(this.state.hotels, sortKey),
-    });
-  }
+  // handleSortKeyChange(sortKey) {
+  //   this.setState({
+  //     sortKey,
+  //     hotels: sortedHotels(this.state.hotels, sortKey),
+  //   });
+  // }
 
   render() {
     console.log(this.props);

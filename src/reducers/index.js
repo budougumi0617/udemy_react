@@ -45,5 +45,16 @@ const hotels = (state = [], action) => {
   }
 };
 
+const sortKey = (state = 'price', action) => {
+  switch (action.type) {
+    case 'CHANGE_SORT_KEY':
+      return action.sortKey;
+    default:
+      return state;
+  }
+};
+
 // 文字列だけじゃなくてオブジェクトとしてexportするように変換
-export default combineReducers({ place, geocodeResult, hotels });
+export default combineReducers({
+  place, geocodeResult, hotels, sortKey,
+});
