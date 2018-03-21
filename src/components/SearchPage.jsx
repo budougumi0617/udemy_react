@@ -73,7 +73,7 @@ class SearchPage extends Component {
     return (
       <div className="search-page">
         <h1 className="app-title">ホテル検索</h1>
-        <SearchForm />
+        <SearchForm history={this.props.history}/>
         <div className="result-area">
           <Map location={this.props.geocodeResult.location} />
           <div>
@@ -92,7 +92,7 @@ class SearchPage extends Component {
 
 SearchPage.propTypes = {
   // react-router-domを使っているとpropsにhistoryやmatchなどの情報が追加される
-  // history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
   geocodeResult: PropTypes.shape({
     address: PropTypes.string,
